@@ -17,16 +17,16 @@ export const putDb = async (content) => {
   console.error('putDb not implemented');
 
   // Create a connection to the database database and version we want to use.
-  const contactDb = await openDB('contact', 1);
+  const textDb = await openDB('text', 1);
 
   // Create a new transaction and specify the database and data privileges.
-  const tx = contactDb.transaction('contact', 'readwrite');
+  const tx = textDb.transaction('text', 'readwrite');
 
   // Open up the desired object store.
-  const store = tx.objectStore('contact');
+  const store = tx.objectStore('text');
 
   // Use the .add() method on the store and pass in the content.
-  const request = store.add({ name: name, home_phone: home, cell_phone: cell, email: email });
+  const request = store.put({ text: content });
 
   // Get confirmation of the request.
   const result = await request;
@@ -34,21 +34,22 @@ export const putDb = async (content) => {
 };
 ;
 // TODO: Add logic for a method that gets all the content from the database
-export const getDb = async () => { 
-  console.error('getDb not implemented');
+export const getAllDb = async () => {
+  console.log('GET all from the database');
 
-  const contactDb = await openDB('contact', 1);
+  // Create a connection to the database database and version we want to use.
+  const todosDb = await openDB('text', 1);
 
   // Create a new transaction and specify the database and data privileges.
-  const tx = contactDb.transaction('contact', 'readonly');
+  const tx = todosDb.transaction('text', 'readonly');
 
   // Open up the desired object store.
-  const store = tx.objectStore('contact');
+  const store = tx.objectStore('text');
 
   // Use the .getAll() method to get all data in the database.
   const request = store.getAll();
 
-  // Get confirmation of the request.
+   // Get confirmation of the request.
   const result = await request;
   console.log('result.value', result);
   return result;
